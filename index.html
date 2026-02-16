@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <link rel="stylesheet" href="style.css" />
+  <title>画稿类型</title>
+</head>
+<body>
+  <main id="app">
+    <h1 id="page-title">画稿类型</h1>
+
+    <section class="card">
+      <div class="section-title">需知</div>
+      <div style="color:#23414f; line-height:1.6; font-size:14px; white-space:pre-wrap; padding-top:4px;">
+猎奇回战作者P4XT0N接稿
+接Roblox女性形象稿件
+不接男性和福瑞（不会）
+稿件三天内截稿 先交后付
+工作日在周一至周五 周末休息
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">类型</div>
+      <div class="controls" id="type-controls">
+        <label class="radio">
+          <input type="radio" name="sfw-nsfw" value="SFW" checked />
+          <span>SFW</span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="sfw-nsfw" value="NSFW" />
+          <span>NSFW</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">衣物外观</div>
+      <div class="controls" id="outfit-controls">
+        <label class="radio">
+          <input type="radio" name="outfit" value="兔女郎" />
+          <span>兔女郎</span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="outfit" value="泳装" />
+          <span>泳装</span>
+        </label>
+        <!-- “无衣物” option shown only when NSFW is selected -->
+        <label class="radio hidden" id="outfit-none-label" style="position:relative; overflow:visible;">
+          <input type="radio" name="outfit" value="无衣物" />
+          <span>无衣物</span>
+        </label>
+      </div>
+
+      <div id="swimsuit-sub" class="subcontrols hidden">
+        <div class="sub-title">泳装类型</div>
+        <label class="radio">
+          <input type="radio" name="swimtype" value="连体" />
+          <span>连体</span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="swimtype" value="比基尼" />
+          <span>比基尼</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">稿类</div>
+      <div class="controls" id="draft-controls">
+        <label class="radio">
+          <input type="radio" name="draft-type" value="线稿" checked />
+          <span>线稿</span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="draft-type" value="涂色" />
+          <span>涂色</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">Roblox形象上传</div>
+      <div class="upload-row">
+        <div class="upload-col">
+          <label class="upload-label">形象正面
+            <input type="file" accept="image/*" id="front-upload">
+          </label>
+          <div class="thumb" id="front-preview"></div>
+        </div>
+        <div class="upload-col">
+          <label class="upload-label">形象背面
+            <input type="file" accept="image/*" id="back-upload">
+          </label>
+          <div class="thumb" id="back-preview"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">备注</div>
+      <div>
+        <textarea id="notes" placeholder="在此输入备注（将出现在导出图片上）" rows="4" style="width:100%; border-radius:10px; padding:10px; border:1px solid rgba(11,41,60,0.06); font-size:14px; resize:vertical;"></textarea>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">价格</div>
+      <div id="price-display" style="font-size:16px; color:#07263b; display:flex; gap:8px; align-items:center;">
+        <div style="color:#94a7b2;">已选择: -</div>
+        <div style="font-weight:700; margin-left:auto;">价格: - ￥</div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <button id="done-btn" class="primary">完成</button>
+    </div>
+  </main>
+
+  <div class="page-tag" aria-hidden="true">
+    <div class="tag-line">@P4XT0N</div>
+    <div class="tag-sub">QQ-1736731564</div>
+  </div>
+
+  <!-- small QR button bottom-left -->
+  <button class="qr-btn" id="qr-btn" aria-label="打开二维码">群</button>
+
+  <!-- QR modal (hidden by default) -->
+  <div class="qr-modal hidden" id="qr-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="qr-backdrop" id="qr-backdrop"></div>
+    <div class="qr-sheet" role="document" aria-labelledby="qr-title">
+      <div id="qr-title" class="qr-title">进猎奇回战群 享受猎奇人生</div>
+      <img src="qr.png" alt="群二维码" class="qr-image" />
+      <button class="qr-close" id="qr-close" aria-label="关闭">×</button>
+    </div>
+  </div>
+
+  <script src="price.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
