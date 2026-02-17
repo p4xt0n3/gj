@@ -115,7 +115,12 @@
     const outfit = document.querySelector('input[name="outfit"]:checked')?.value || '-';
     const swimtype = document.querySelector('input[name="swimtype"]:checked')?.value || '';
     const draft = document.querySelector('input[name="draft-type"]:checked')?.value || '-';
-    const priceValue = (typeof window.getPrice === 'function') ? window.getPrice(type, draft) : null;
+    // base price from price.js
+    let priceValue = (typeof window.getPrice === 'function') ? window.getPrice(type, draft) : null;
+    const outfitSurcharge = (outfit === '原图衣物') ? 2 : 0;
+    if (priceValue !== null && priceValue !== undefined) {
+      priceValue = priceValue + outfitSurcharge;
+    }
 
     const selectedParts = [];
     if (type && type !== '-') selectedParts.push(type);
@@ -137,6 +142,44 @@
   }
 
 
+
+  // reset helper: clear all inputs, previews and restore defaults
+  function resetAll() {
+    // radios: set defaults
+    const sfw = document.querySelector('input[name="sfw-nsfw"][value="SFW"]');
+    if (sfw) sfw.checked = true;
+    const draftDefault = document.querySelector('input[name="draft-type"][value="线稿"]');
+    if (draftDefault) draftDefault.checked = true;
+    // outfit: choose first non-spoiler (兔女郎)
+    const firstOutfit = document.querySelector('input[name="outfit"][value="兔女郎"]') || document.querySelector('input[name="outfit"]');
+    if (firstOutfit) firstOutfit.checked = true;
+    // swimtype clear
+    swimtypeRadios.forEach(r => r.checked = false);
+
+    // clear text inputs
+    const userName = document.getElementById('user-name');
+    const userQQ = document.getElementById('user-qq');
+    const userRoblox = document.getElementById('user-roblox');
+    if (userName) userName.value = '';
+    if (userQQ) userQQ.value = '';
+    if (userRoblox) userRoblox.value = '';
+
+    if (notesInput) notesInput.value = '';
+
+    // clear file inputs and previews
+    if (frontInput) { frontInput.value = ''; }
+    if (backInput) { backInput.value = ''; }
+    frontPreview.innerHTML = '';
+    backPreview.innerHTML = '';
+    frontImg = null;
+    backImg = null;
+
+    // update visibility and visuals
+    updateOutfitNoneVisibility();
+    updateSwimsuitSub();
+    updatePriceDisplay();
+    refreshRadioVisuals();
+  }
 
   // initial visuals
   refreshRadioVisuals();
@@ -364,8 +407,11 @@
     drawImageFrame(notesX + areaW + padding, boxY, areaW, areaH, backImg, 'back');
 
     // Price (centered under image area) - uses global getPrice if available
-    const priceValue = (typeof window.getPrice === 'function') ? window.getPrice(type, draft) : null;
+    // compute displayed price including outfit surcharge
+    let priceValue = (typeof window.getPrice === 'function') ? window.getPrice(type, draft) : null;
+    const outfitSurcharge = (outfit === '原图衣物') ? 2 : 0;
     if (priceValue !== null && priceValue !== undefined) {
+      priceValue = priceValue + outfitSurcharge;
       const priceText = `价格: ${priceValue}￥`;
       ctx.fillStyle = '#0b2b3a';
       ctx.font = '700 18px sans-serif';
@@ -390,8 +436,26 @@
       if (!blob) return;
       const url = URL.createObjectURL(blob);
       window.open(url, '_blank');
+      // after opening the generated image, reset the form to defaults
+      // small timeout to avoid interfering with the newly opened tab
+      setTimeout(() => {
+        resetAll();
+      }, 300);
     }, 'image/png');
   });
+
+  // Announcement modal (auto-shown on load)
+  const announceModal = document.getElementById('announce-modal');
+  const announceBackdrop = document.getElementById('announce-backdrop');
+  const announceClose = document.getElementById('announce-close');
+
+  function closeAnnounce() {
+    if (!announceModal) return;
+    announceModal.setAttribute('aria-hidden', 'true');
+    setTimeout(() => announceModal.classList.add('hidden'), 220);
+  }
+  if (announceClose) announceClose.addEventListener('click', closeAnnounce);
+  if (announceBackdrop) announceBackdrop.addEventListener('click', closeAnnounce);
 
   // QR modal interactions
   const qrBtn = document.getElementById('qr-btn');
@@ -414,5 +478,16 @@
   if (qrBtn) qrBtn.addEventListener('click', openQr);
   if (qrClose) qrClose.addEventListener('click', closeQr);
   if (qrBackdrop) qrBackdrop.addEventListener('click', closeQr);
+
+  // reset button wiring (top-left)
+  const resetBtn = document.getElementById('reset-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      // animate a subtle feedback
+      resetBtn.style.transform = 'scale(0.98)';
+      setTimeout(() => { resetBtn.style.transform = ''; }, 120);
+      resetAll();
+    });
+  }
 
 })();

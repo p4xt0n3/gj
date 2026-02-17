@@ -235,6 +235,100 @@ button.primary:hover{ box-shadow:0 18px 38px rgba(11,121,208,0.14) }
   .page-tag .tag-sub{ font-size:10px }
 }
 
+/* Reset button (fixed top-left) - improved visuals */
+.reset-btn{
+  position:fixed;
+  left:14px;
+  top:12px;
+  z-index:10005;
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  border:none;
+  background:linear-gradient(180deg,#ffffff,#f6f9fc);
+  box-shadow:0 8px 20px rgba(7,38,59,0.08);
+  color:#07263b;
+  font-size:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+  outline: none;
+  border:1px solid rgba(7,38,59,0.06);
+}
+.reset-btn:hover{ transform:translateY(-3px); box-shadow:0 14px 34px rgba(7,38,59,0.12) }
+.reset-btn:active{ transform:translateY(0) }
+
+/* Announcement modal (shown on load) */
+.announce-modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:11000;
+  pointer-events:auto;
+}
+.announce-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(6,18,30,0.55);
+  backdrop-filter:blur(8px);
+}
+.announce-sheet{
+  position:relative;
+  width:320px;
+  max-width:90%;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 28px 70px rgba(6,18,30,0.28);
+  z-index:11001;
+  text-align:center;
+}
+.announce-title{
+  font-weight:800;
+  color:#07263b;
+  font-size:17px;
+  margin-bottom:10px;
+}
+.announce-text{
+  font-size:14px;
+  color:#23414f;
+  line-height:1.5;
+  margin-bottom:14px;
+}
+.announce-qr{
+  width:100%;
+  height:auto;
+  max-height:260px;
+  border-radius:10px;
+  object-fit:contain;
+  border:1px solid rgba(8,50,68,0.04);
+  box-shadow:0 8px 20px rgba(11,41,60,0.06);
+}
+.announce-close{
+  position:absolute;
+  top:8px;
+  right:8px;
+  border:none;
+  background:rgba(7,38,59,0.06);
+  color:#07263b;
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  font-size:20px;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 18px rgba(7,38,59,0.06);
+  transition:transform .12s ease, background .12s ease;
+}
+.announce-close:hover{ transform:translateY(-2px); background:rgba(7,38,59,0.09) }
+
 /* QR button and modal styles - improved visuals */
 .qr-btn{
   position:fixed;
@@ -328,4 +422,5 @@ button.primary:hover{ box-shadow:0 18px 38px rgba(11,121,208,0.14) }
 @media (max-width:520px){
   .qr-sheet{ width:92%; margin:12px; padding:12px; border-radius:12px; }
   .qr-btn{ left:10px; bottom:8px; padding:10px 12px; min-width:50px; min-height:44px; border-radius:10px; }
+  .reset-btn{ left:10px; top:8px; width:40px; height:40px; border-radius:10px; font-size:16px; }
 }
