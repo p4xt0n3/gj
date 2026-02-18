@@ -290,7 +290,28 @@
     // draft type badge
     bx += drawBadge(draft ? `稿类: ${draft}` : '稿类: -', bx, by);
     if (outfit === '泳装') {
-      drawBadge(swimtype ? `泳装: ${swimtype}` : '泳装: -', bx, by);
+      bx += drawBadge(swimtype ? `泳装: ${swimtype}` : '泳装: -', bx, by);
+    }
+
+    // draw username info badges from the form so exported image contains submitter info
+    const formUserName = document.getElementById('user-name')?.value?.trim() || '';
+    const formUserQQ = document.getElementById('user-qq')?.value?.trim() || '';
+    const formUserRoblox = document.getElementById('user-roblox')?.value?.trim() || '';
+
+    if (formUserName) {
+      bx += drawBadge(`用户名: ${formUserName}`, bx, by, '#fff7ef', '#7a4a2b');
+    } else {
+      bx += drawBadge('用户名: -', bx, by, '#fff7ef', '#7a4a2b');
+    }
+    if (formUserQQ) {
+      bx += drawBadge(`QQ: ${formUserQQ}`, bx, by, '#f7fff6', '#1f6a3f');
+    } else {
+      bx += drawBadge('QQ: -', bx, by, '#f7fff6', '#1f6a3f');
+    }
+    if (formUserRoblox) {
+      bx += drawBadge(`Roblox: ${formUserRoblox}`, bx, by, '#f0f8ff', '#0b2b3a');
+    } else {
+      bx += drawBadge('Roblox: -', bx, by, '#f0f8ff', '#0b2b3a');
     }
 
     // content divider
